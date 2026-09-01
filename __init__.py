@@ -1,71 +1,249 @@
-# Copyright (C) Dnspython Contributors, see LICENSE for text of ISC license
+from __future__ import annotations
 
-# Copyright (C) 2003-2007, 2009-2011 Nominum, Inc.
-#
-# Permission to use, copy, modify, and distribute this software and its
-# documentation for any purpose with or without fee is hereby granted,
-# provided that the above copyright notice and this permission notice
-# appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND NOMINUM DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL NOMINUM BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
-# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# Importing the typing module would conflict with websockets.typing.
+from typing import TYPE_CHECKING
 
-"""Class ANY (generic) rdata type classes."""
+from .imports import lazy_import
+from .version import version as __version__  # noqa: F401
+
 
 __all__ = [
-    "AFSDB",
-    "AMTRELAY",
-    "AVC",
-    "CAA",
-    "CDNSKEY",
-    "CDS",
-    "CERT",
-    "CNAME",
-    "CSYNC",
-    "DLV",
-    "DNAME",
-    "DNSKEY",
-    "DS",
-    "DSYNC",
-    "EUI48",
-    "EUI64",
-    "GPOS",
-    "HINFO",
-    "HIP",
-    "ISDN",
-    "L32",
-    "L64",
-    "LOC",
-    "LP",
-    "MX",
-    "NID",
-    "NINFO",
-    "NS",
-    "NSEC",
-    "NSEC3",
-    "NSEC3PARAM",
-    "OPENPGPKEY",
-    "OPT",
-    "PTR",
-    "RESINFO",
-    "RP",
-    "RRSIG",
-    "RT",
-    "SMIMEA",
-    "SOA",
-    "SPF",
-    "SSHFP",
-    "TKEY",
-    "TLSA",
-    "TSIG",
-    "TXT",
-    "URI",
-    "WALLET",
-    "X25",
-    "ZONEMD",
+    # .asyncio.client
+    "connect",
+    "unix_connect",
+    "ClientConnection",
+    # .asyncio.router
+    "route",
+    "unix_route",
+    "Router",
+    # .asyncio.server
+    "basic_auth",
+    "broadcast",
+    "serve",
+    "unix_serve",
+    "ServerConnection",
+    "Server",
+    # .client
+    "ClientProtocol",
+    # .datastructures
+    "Headers",
+    "HeadersLike",
+    "MultipleValuesError",
+    # .exceptions
+    "ConcurrencyError",
+    "ConnectionClosed",
+    "ConnectionClosedError",
+    "ConnectionClosedOK",
+    "DuplicateParameter",
+    "HeaderLineTooLong",
+    "InvalidHandshake",
+    "InvalidHeader",
+    "InvalidHeaderFormat",
+    "InvalidHeaderValue",
+    "InvalidMessage",
+    "InvalidMethod",
+    "InvalidOrigin",
+    "InvalidParameterName",
+    "InvalidParameterValue",
+    "InvalidProtocol",
+    "InvalidProxy",
+    "InvalidProxyMessage",
+    "InvalidProxyStatus",
+    "InvalidState",
+    "InvalidStatus",
+    "InvalidUpgrade",
+    "InvalidURI",
+    "NegotiationError",
+    "PayloadTooBig",
+    "ProtocolError",
+    "ProxyError",
+    "RequestLineTooLong",
+    "SecurityError",
+    "StatusLineTooLong",
+    "TooManyHeaders",
+    "WebSocketException",
+    # .frames
+    "Close",
+    "CloseCode",
+    "Frame",
+    "Opcode",
+    # .http11
+    "Request",
+    "Response",
+    # .protocol
+    "Protocol",
+    "Side",
+    "State",
+    # .server
+    "ServerProtocol",
+    # .typing
+    "Data",
+    "ExtensionName",
+    "ExtensionParameter",
+    "LoggerLike",
+    "StatusLike",
+    "Origin",
+    "Subprotocol",
 ]
+
+# When type checking, import non-deprecated aliases eagerly. Else, import on demand.
+if TYPE_CHECKING:
+    from .asyncio.client import ClientConnection, connect, unix_connect
+    from .asyncio.router import Router, route, unix_route
+    from .asyncio.server import (
+        Server,
+        ServerConnection,
+        basic_auth,
+        broadcast,
+        serve,
+        unix_serve,
+    )
+    from .client import ClientProtocol
+    from .datastructures import Headers, HeadersLike, MultipleValuesError
+    from .exceptions import (
+        ConcurrencyError,
+        ConnectionClosed,
+        ConnectionClosedError,
+        ConnectionClosedOK,
+        DuplicateParameter,
+        HeaderLineTooLong,
+        InvalidHandshake,
+        InvalidHeader,
+        InvalidHeaderFormat,
+        InvalidHeaderValue,
+        InvalidMessage,
+        InvalidMethod,
+        InvalidOrigin,
+        InvalidParameterName,
+        InvalidParameterValue,
+        InvalidProtocol,
+        InvalidProxy,
+        InvalidProxyMessage,
+        InvalidProxyStatus,
+        InvalidState,
+        InvalidStatus,
+        InvalidUpgrade,
+        InvalidURI,
+        NegotiationError,
+        PayloadTooBig,
+        ProtocolError,
+        ProxyError,
+        RequestLineTooLong,
+        SecurityError,
+        StatusLineTooLong,
+        TooManyHeaders,
+        WebSocketException,
+    )
+    from .frames import Close, CloseCode, Frame, Opcode
+    from .http11 import Request, Response
+    from .protocol import Protocol, Side, State
+    from .server import ServerProtocol
+    from .typing import (
+        Data,
+        ExtensionName,
+        ExtensionParameter,
+        LoggerLike,
+        Origin,
+        StatusLike,
+        Subprotocol,
+    )
+else:
+    lazy_import(
+        globals(),
+        aliases={
+            # .asyncio.client
+            "connect": ".asyncio.client",
+            "unix_connect": ".asyncio.client",
+            "ClientConnection": ".asyncio.client",
+            # .asyncio.router
+            "route": ".asyncio.router",
+            "unix_route": ".asyncio.router",
+            "Router": ".asyncio.router",
+            # .asyncio.server
+            "basic_auth": ".asyncio.server",
+            "broadcast": ".asyncio.server",
+            "serve": ".asyncio.server",
+            "unix_serve": ".asyncio.server",
+            "ServerConnection": ".asyncio.server",
+            "Server": ".asyncio.server",
+            # .client
+            "ClientProtocol": ".client",
+            # .datastructures
+            "Headers": ".datastructures",
+            "HeadersLike": ".datastructures",
+            "MultipleValuesError": ".datastructures",
+            # .exceptions
+            "ConcurrencyError": ".exceptions",
+            "ConnectionClosed": ".exceptions",
+            "ConnectionClosedError": ".exceptions",
+            "ConnectionClosedOK": ".exceptions",
+            "DuplicateParameter": ".exceptions",
+            "HeaderLineTooLong": ".exceptions",
+            "InvalidHandshake": ".exceptions",
+            "InvalidHeader": ".exceptions",
+            "InvalidHeaderFormat": ".exceptions",
+            "InvalidHeaderValue": ".exceptions",
+            "InvalidMessage": ".exceptions",
+            "InvalidMethod": ".exceptions",
+            "InvalidOrigin": ".exceptions",
+            "InvalidParameterName": ".exceptions",
+            "InvalidParameterValue": ".exceptions",
+            "InvalidProtocol": ".exceptions",
+            "InvalidProxy": ".exceptions",
+            "InvalidProxyMessage": ".exceptions",
+            "InvalidProxyStatus": ".exceptions",
+            "InvalidState": ".exceptions",
+            "InvalidStatus": ".exceptions",
+            "InvalidUpgrade": ".exceptions",
+            "InvalidURI": ".exceptions",
+            "NegotiationError": ".exceptions",
+            "PayloadTooBig": ".exceptions",
+            "ProtocolError": ".exceptions",
+            "ProxyError": ".exceptions",
+            "RequestLineTooLong": ".exceptions",
+            "SecurityError": ".exceptions",
+            "StatusLineTooLong": ".exceptions",
+            "TooManyHeaders": ".exceptions",
+            "WebSocketException": ".exceptions",
+            # .frames
+            "Close": ".frames",
+            "CloseCode": ".frames",
+            "Frame": ".frames",
+            "Opcode": ".frames",
+            # .http11
+            "Request": ".http11",
+            "Response": ".http11",
+            # .protocol
+            "Protocol": ".protocol",
+            "Side": ".protocol",
+            "State": ".protocol",
+            # .server
+            "ServerProtocol": ".server",
+            # .typing
+            "Data": ".typing",
+            "ExtensionName": ".typing",
+            "ExtensionParameter": ".typing",
+            "LoggerLike": ".typing",
+            "Origin": ".typing",
+            "StatusLike": ".typing",
+            "Subprotocol": ".typing",
+        },
+        deprecated_aliases={
+            # deprecated in 14.0 - 2024-11-09
+            # .legacy.auth
+            "BasicAuthWebSocketServerProtocol": ".legacy.auth",
+            "basic_auth_protocol_factory": ".legacy.auth",
+            # .legacy.client
+            "WebSocketClientProtocol": ".legacy.client",
+            # .legacy.exceptions
+            "AbortHandshake": ".legacy.exceptions",
+            "InvalidStatusCode": ".legacy.exceptions",
+            "RedirectHandshake": ".legacy.exceptions",
+            "WebSocketProtocolError": ".legacy.exceptions",
+            # .legacy.protocol
+            "WebSocketCommonProtocol": ".legacy.protocol",
+            # .legacy.server
+            "WebSocketServer": ".legacy.server",
+            "WebSocketServerProtocol": ".legacy.server",
+        },
+    )

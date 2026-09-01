@@ -1,42 +1,92 @@
-# Copyright (C) Dnspython Contributors, see LICENSE for text of ISC license
+from __future__ import annotations
 
-# Copyright (C) 2003-2017 Nominum, Inc.
-#
-# Permission to use, copy, modify, and distribute this software and its
-# documentation for any purpose with or without fee is hereby granted,
-# provided that the above copyright notice and this permission notice
-# appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND NOMINUM DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL NOMINUM BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
-# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+import importlib.metadata
 
-"""dnspython release version information."""
 
-#: MAJOR
-MAJOR = 2
-#: MINOR
-MINOR = 8
-#: MICRO
-MICRO = 0
-#: RELEASELEVEL
-RELEASELEVEL = 0x0F
-#: SERIAL
-SERIAL = 0
+__all__ = ["tag", "version", "commit"]
 
-if RELEASELEVEL == 0x0F:  # pragma: no cover  lgtm[py/unreachable-statement]
-    #: version
-    version = f"{MAJOR}.{MINOR}.{MICRO}"  # lgtm[py/unreachable-statement]
-elif RELEASELEVEL == 0x00:  # pragma: no cover  lgtm[py/unreachable-statement]
-    version = f"{MAJOR}.{MINOR}.{MICRO}dev{SERIAL}"  # lgtm[py/unreachable-statement]
-elif RELEASELEVEL == 0x0C:  # pragma: no cover  lgtm[py/unreachable-statement]
-    version = f"{MAJOR}.{MINOR}.{MICRO}rc{SERIAL}"  # lgtm[py/unreachable-statement]
-else:  # pragma: no cover  lgtm[py/unreachable-statement]
-    version = f"{MAJOR}.{MINOR}.{MICRO}{RELEASELEVEL:x}{SERIAL}"  # lgtm[py/unreachable-statement]
 
-#: hexversion
-hexversion = MAJOR << 24 | MINOR << 16 | MICRO << 8 | RELEASELEVEL << 4 | SERIAL
+# ========= =========== ===================
+#           release     development
+# ========= =========== ===================
+# tag       X.Y         X.Y (upcoming)
+# version   X.Y         X.Y.dev1+g5678cde
+# commit    X.Y         5678cde
+# ========= =========== ===================
+
+
+# When tagging a release, set `released = True`.
+# After tagging a release, set `released = False` and increment `tag`.
+
+released = True
+
+tag = version = commit = "17.1"
+
+
+if not released:  # pragma: no cover
+    import pathlib
+    import re
+    import subprocess
+
+    def get_version(tag: str) -> str:
+        # Since setup.py executes the contents of src/websockets/version.py,
+        # __file__ can point to either of these two files.
+        file_path = pathlib.Path(__file__)
+        root_dir = file_path.parents[0 if file_path.name == "setup.py" else 2]
+
+        # Read version from package metadata if it is installed.
+        try:
+            version = importlib.metadata.version("websockets")
+        except ImportError:
+            pass
+        else:
+            # Check that this file belongs to the installed package.
+            files = importlib.metadata.files("websockets")
+            if files:
+                version_files = [f for f in files if f.name == file_path.name]
+                if version_files:
+                    version_file = version_files[0]
+                    if version_file.locate() == file_path:
+                        return version
+
+        # Read version from git if available.
+        try:
+            description = subprocess.run(
+                ["git", "describe", "--dirty", "--tags", "--long"],
+                capture_output=True,
+                cwd=root_dir,
+                timeout=1,
+                check=True,
+                text=True,
+            ).stdout.strip()
+        # subprocess.run raises FileNotFoundError if git isn't on $PATH.
+        except (
+            FileNotFoundError,
+            subprocess.CalledProcessError,
+            subprocess.TimeoutExpired,
+        ):
+            pass
+        else:
+            description_re = r"[0-9.]+-([0-9]+)-(g[0-9a-f]{7,}(?:-dirty)?)"
+            match = re.fullmatch(description_re, description)
+            if match is None:
+                raise ValueError(f"Unexpected git description: {description}")
+            distance, remainder = match.groups()
+            remainder = remainder.replace("-", ".")  # required by PEP 440
+            return f"{tag}.dev{distance}+{remainder}"
+
+        # Avoid crashing if the development version cannot be determined.
+        return f"{tag}.dev0+gunknown"
+
+    version = get_version(tag)
+
+    def get_commit(tag: str, version: str) -> str:
+        # Extract commit from version, falling back to tag if not available.
+        version_re = r"[0-9.]+\.dev[0-9]+\+g([0-9a-f]{7,}|unknown)(?:\.dirty)?"
+        match = re.fullmatch(version_re, version)
+        if match is None:
+            raise ValueError(f"Unexpected version: {version}")
+        (commit,) = match.groups()
+        return tag if commit == "unknown" else commit
+
+    commit = get_commit(tag, version)

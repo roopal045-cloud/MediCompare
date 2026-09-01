@@ -1,32 +1,18 @@
-# SPDX-FileCopyrightText: 2015 Eric Larson
-#
-# SPDX-License-Identifier: Apache-2.0
+from __future__ import annotations
 
-"""CacheControl import Interface.
+from pip._internal.utils import _log
 
-Make it easy to import from cachecontrol without long namespaces.
-"""
+# init_logging() must be called before any call to logging.getLogger()
+# which happens at import of most modules.
+_log.init_logging()
 
-import importlib.metadata
 
-from pip._vendor.cachecontrol.adapter import CacheControlAdapter
-from pip._vendor.cachecontrol.controller import CacheController
-from pip._vendor.cachecontrol.wrapper import CacheControl
+def main(args: list[str] | None = None) -> int:
+    """This is preserved for old console scripts that may still be referencing
+    it.
 
-__author__ = "Eric Larson"
-__email__ = "eric@ionrock.org"
-# pip patch: this won't work when vendored, so just patch it out as it's unused
-# __version__ = importlib.metadata.version("cachecontrol")
+    For additional details, see https://github.com/pypa/pip/issues/7498.
+    """
+    from pip._internal.utils.entrypoints import _wrapper
 
-__all__ = [
-    "__author__",
-    "__email__",
-    "__version__",
-    "CacheControlAdapter",
-    "CacheController",
-    "CacheControl",
-]
-
-import logging
-
-logging.getLogger(__name__).addHandler(logging.NullHandler())
+    return _wrapper(args)

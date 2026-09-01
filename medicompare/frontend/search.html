@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Medicines — MediCompare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/search.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container search-shell">
+
+    <div class="search-head">
+      <span class="eyebrow">Verified catalogue</span>
+      <h1>Search medicines</h1>
+      <p>Look up any medicine by brand, salt, or category — and see generic and Jan Aushadhi options at a glance.</p>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search brand name, salt, or category — e.g. Pantoprazole, antibiotic…">
+      <button class="btn btn-primary" id="search-btn">Search</button>
+    </div>
+
+    <div class="search-layout">
+      <div class="card filters-card">
+        <h4>Filters</h4>
+        <div class="filter-group">
+          <label class="checkbox-row"><input type="checkbox" id="filter-generic"> Generic available</label>
+          <label class="checkbox-row"><input type="checkbox" id="filter-ja"> Jan Aushadhi available</label>
+        </div>
+        <div class="filter-group">
+          <label for="filter-price">Max price</label>
+          <input type="range" id="filter-price" min="10" max="250" step="10" value="250">
+          <div class="filter-range-value" id="filter-price-value">₹250+</div>
+        </div>
+        <button class="btn btn-outline btn-block btn-sm" id="reset-filters">Reset filters</button>
+      </div>
+
+      <div>
+        <div class="results-count" id="results-count"></div>
+        <div class="results-grid" id="results-grid">
+          <div class="state-block" style="grid-column: 1 / -1;"><div class="spinner"></div>Loading medicines…</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/search.js"></script>
+</body>
+</html>

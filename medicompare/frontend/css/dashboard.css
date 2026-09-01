@@ -1,0 +1,167 @@
+/* =========================================================
+   MediCompare — dashboard.css
+   ========================================================= */
+
+.dashboard-shell { padding: var(--space-7) 0 var(--space-9); }
+
+.dashboard-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dashboard-welcome h1 { margin-bottom: 4px; }
+.dashboard-welcome p { margin: 0; }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.stat-card .stat-value {
+  font-family: var(--font-mono);
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.stat-card .stat-label {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+.stat-card.stat-accent .stat-value { color: var(--color-accent-dark); }
+.stat-card.stat-demo-note { font-size: 0.72rem; color: var(--color-ink-faint); margin-top: -4px; }
+
+.quick-actions {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
+  flex-wrap: wrap;
+}
+
+.quick-action-card {
+  flex: 1 1 240px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  text-decoration: none;
+  color: inherit;
+}
+.quick-action-card:hover { text-decoration: none; }
+
+.quick-action-icon {
+  width: 46px; height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.quick-action-card.accent .quick-action-icon { background: var(--color-accent-light); color: var(--color-accent-dark); }
+
+.quick-action-card h4 { margin-bottom: 2px; }
+.quick-action-card p { margin: 0; font-size: 0.85rem; }
+
+.dashboard-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.list-row:last-child { border-bottom: none; }
+
+.list-row-main { display: flex; flex-direction: column; gap: 2px; }
+.list-row-main strong { font-size: 0.98rem; }
+.list-row-main span { font-size: 0.83rem; color: var(--color-ink-faint); }
+
+/* ---------- Patient / caregiver patient cards ---------- */
+
+.patients-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
+}
+
+.patient-card { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.patient-card-head { display: flex; align-items: center; gap: var(--space-3); }
+
+.patient-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-family: var(--font-display);
+  flex-shrink: 0;
+}
+
+.patient-card-head h4 { margin-bottom: 0; }
+.patient-card-head span { font-size: 0.82rem; color: var(--color-ink-faint); }
+
+.patient-card-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+.add-patient-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1.5px dashed var(--color-border-strong);
+  background: transparent;
+  cursor: pointer;
+  color: var(--color-ink-soft);
+  min-height: 150px;
+  box-shadow: none;
+}
+.add-patient-card:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+/* ---------- Modal ---------- */
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(20, 35, 31, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: var(--space-4);
+}
+.modal-overlay.open { display: flex; }
+
+.modal-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); }
+.modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--color-ink-faint); }

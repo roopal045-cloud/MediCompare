@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savings History — MediCompare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container dashboard-shell">
+
+    <div class="dashboard-welcome">
+      <div>
+        <h1>Savings history</h1>
+        <p id="history-subhead">Every prescription you've compared, and what it could have saved.</p>
+      </div>
+      <div id="patient-switcher-mount"></div>
+    </div>
+
+    <div class="dashboard-grid" id="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="card stat-card"><span class="stat-value">—</span><span class="stat-label">Prescriptions compared</span></div>
+      <div class="card stat-card stat-accent"><span class="stat-value">—</span><span class="stat-label">Total potential savings</span></div>
+      <div class="card stat-card"><span class="stat-value">—</span><span class="stat-label">Average saving per prescription</span></div>
+    </div>
+
+    <div class="card" id="history-mount">
+      <div class="state-block"><div class="spinner"></div>Loading history…</div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/history.js"></script>
+</body>
+</html>

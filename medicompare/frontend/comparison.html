@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Price Comparison — MediCompare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/comparison.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container comparison-shell">
+
+    <div class="analysis-head">
+      <div class="analysis-head-top">
+        <div>
+          <span class="eyebrow">Step 3 of 4</span>
+          <h1>Compare prices</h1>
+        </div>
+      </div>
+      <p>We only compare medicines with the same active ingredient, strength, and dosage form as prescribed.</p>
+    </div>
+
+    <div id="summary-mount"></div>
+
+    <div id="comparisons-mount">
+      <div class="card state-block"><div class="spinner"></div>Building your comparison…</div>
+    </div>
+
+    <div class="disclaimer" style="margin-top: var(--space-6);">
+      <span style="font-size:1.2rem;">⚠</span>
+      <div>
+        Prices marked <strong>Demo / reference price</strong> are prototype values, not live market
+        data. Always confirm any substitution with your doctor or pharmacist before changing what
+        you take.
+      </div>
+    </div>
+
+    <div class="comparison-footer-actions">
+      <a href="#" class="btn btn-outline" id="back-link">Back to review</a>
+      <a href="#" class="btn btn-accent btn-lg" id="view-history-link">View savings history</a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/comparison.js"></script>
+</body>
+</html>

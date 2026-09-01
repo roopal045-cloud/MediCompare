@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — MediCompare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container dashboard-shell">
+
+    <div class="dashboard-welcome">
+      <div>
+        <h1 id="welcome-heading">Welcome back</h1>
+        <p>Here's what's happening with your prescriptions.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-grid" id="stats-grid">
+      <div class="card stat-card"><span class="stat-value">—</span><span class="stat-label">Prescriptions analyzed</span></div>
+      <div class="card stat-card"><span class="stat-value">—</span><span class="stat-label">Medicines compared</span></div>
+      <div class="card stat-card stat-accent"><span class="stat-value">—</span><span class="stat-label">Potential savings</span></div>
+      <div class="card stat-card"><span class="stat-value">—</span><span class="stat-label">Pending verification</span></div>
+    </div>
+
+    <div class="quick-actions">
+      <a href="scan.html" class="card card-hover quick-action-card accent">
+        <span class="quick-action-icon">📷</span>
+        <div><h4>Scan prescription</h4><p>Upload, photograph, or try a demo</p></div>
+      </a>
+      <a href="search.html" class="card card-hover quick-action-card">
+        <span class="quick-action-icon">🔍</span>
+        <div><h4>Search medicines</h4><p>Browse the verified catalogue</p></div>
+      </a>
+      <a href="history.html" class="card card-hover quick-action-card">
+        <span class="quick-action-icon">📈</span>
+        <div><h4>Savings history</h4><p>See what you've saved over time</p></div>
+      </a>
+    </div>
+
+    <div class="dashboard-section-title">
+      <h3 style="margin:0;">Recent prescriptions</h3>
+    </div>
+    <div class="card" id="recent-prescriptions">
+      <div class="state-block"><div class="spinner"></div>Loading…</div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

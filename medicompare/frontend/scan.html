@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scan Prescription — MediCompare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/scan.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container scan-shell">
+
+    <div class="scan-head">
+      <span class="eyebrow">Step 1 of 4</span>
+      <h1>Scan your prescription</h1>
+      <p>Upload a photo or PDF, or capture it live. We'll extract each medicine and flag anything we're not confident about.</p>
+    </div>
+
+    <div id="upload-stage">
+      <div class="scan-tabs" role="tablist">
+        <button class="scan-tab active" data-tab="upload" id="tab-upload">Upload file</button>
+        <button class="scan-tab" data-tab="camera" id="tab-camera">Use camera</button>
+      </div>
+
+      <div class="card">
+        <div class="scan-panel active" id="panel-upload">
+          <div class="upload-dropzone" id="dropzone">
+            <div class="upload-icon">⬆</div>
+            <h4>Drag & drop your prescription</h4>
+            <p>or click to browse — JPG, PNG, or PDF, up to 8&nbsp;MB</p>
+            <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.pdf">
+          </div>
+          <div id="file-preview-mount" style="margin-top:16px;"></div>
+        </div>
+
+        <div class="scan-panel" id="panel-camera">
+          <div class="camera-wrap">
+            <video id="camera-video" autoplay playsinline></video>
+            <canvas id="camera-canvas" style="display:none;"></canvas>
+            <div class="scan-actions">
+              <button class="btn btn-outline" id="camera-start-btn">Start camera</button>
+              <button class="btn btn-primary" id="camera-capture-btn" style="display:none;">Capture photo</button>
+              <button class="btn btn-ghost" id="camera-retake-btn" style="display:none;">Retake</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="scan-actions">
+          <button class="btn btn-accent btn-lg" id="analyze-btn" disabled>Analyze prescription</button>
+        </div>
+
+        <div class="demo-cta">
+          <p>Don't have a prescription handy? Try it with a sample.</p>
+          <button class="btn btn-outline" id="demo-btn">Try demo prescription</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="processing-stage" style="display:none;">
+      <div class="card processing-block">
+        <div class="processing-rings"><span></span><span></span></div>
+        <h3>Reading your prescription…</h3>
+        <p>This usually takes a few seconds.</p>
+        <ul class="processing-steps" id="processing-steps">
+          <li id="step-1">Preprocessing image</li>
+          <li id="step-2">Running AI extraction</li>
+          <li id="step-3">Matching against verified catalogue</li>
+          <li id="step-4">Preparing your results</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="error-stage" style="display:none;">
+      <div class="card state-block">
+        <h3>We couldn't process that</h3>
+        <p id="error-message">Something went wrong.</p>
+        <button class="btn btn-primary" id="retry-btn" style="margin-top:12px;">Try again</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/scan.js"></script>
+</body>
+</html>

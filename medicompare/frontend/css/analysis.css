@@ -1,0 +1,88 @@
+/* =========================================================
+   MediCompare — analysis screen styles
+   (shared into scan.css imports on analysis.html)
+   ========================================================= */
+
+.analysis-shell { padding: var(--space-7) 0 var(--space-9); max-width: 780px; margin: 0 auto; }
+
+.analysis-head { margin-bottom: var(--space-6); }
+.analysis-head-top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-4); flex-wrap: wrap; }
+
+.medicine-card {
+  margin-bottom: var(--space-4);
+  position: relative;
+}
+
+.medicine-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.medicine-card-head h3 { margin-bottom: 2px; }
+.medicine-card-head .medicine-salt { color: var(--color-ink-soft); font-size: 0.9rem; }
+
+.medicine-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.medicine-field-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-faint);
+  margin-bottom: 2px;
+}
+.medicine-field-value { font-size: 0.95rem; color: var(--color-ink); }
+
+.medicine-card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.medicine-card.low-confidence { border-color: #F1C7C2; background: linear-gradient(180deg, var(--color-warning-light) 0%, var(--color-surface) 90px); }
+.medicine-card.verified { border-color: var(--color-primary-line); }
+
+.edit-form { display: none; }
+.edit-form.open { display: block; }
+.edit-form .medicine-fields { margin-bottom: var(--space-3); }
+
+.add-medicine-card {
+  border: 1.5px dashed var(--color-border-strong);
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+  padding: var(--space-5);
+}
+
+.add-medicine-toggle {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.analysis-footer-actions {
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent, var(--color-bg) 30%);
+  padding: var(--space-5) 0 var(--space-4);
+  margin-top: var(--space-5);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}

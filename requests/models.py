@@ -13,16 +13,16 @@ import datetime
 import encodings.idna  # noqa: F401
 from io import UnsupportedOperation
 
-from urllib3.exceptions import (
+from pip._vendor.urllib3.exceptions import (
     DecodeError,
     LocationParseError,
     ProtocolError,
     ReadTimeoutError,
     SSLError,
 )
-from urllib3.fields import RequestField
-from urllib3.filepost import encode_multipart_formdata
-from urllib3.util import parse_url
+from pip._vendor.urllib3.fields import RequestField
+from pip._vendor.urllib3.filepost import encode_multipart_formdata
+from pip._vendor.urllib3.util import parse_url
 
 from ._internal_utils import to_native_string, unicode_is_ascii
 from .auth import HTTPBasicAuth
@@ -34,9 +34,11 @@ from .compat import (
     builtin_str,
     chardet,
     cookielib,
+    urlencode,
+    urlsplit,
+    urlunparse,
 )
 from .compat import json as complexjson
-from .compat import urlencode, urlsplit, urlunparse
 from .cookies import _copy_cookie_jar, cookiejar_from_dict, get_cookie_header
 from .exceptions import (
     ChunkedEncodingError,
@@ -45,11 +47,11 @@ from .exceptions import (
     HTTPError,
     InvalidJSONError,
     InvalidURL,
+    MissingSchema,
+    StreamConsumedError,
 )
 from .exceptions import JSONDecodeError as RequestsJSONDecodeError
-from .exceptions import MissingSchema
 from .exceptions import SSLError as RequestsSSLError
-from .exceptions import StreamConsumedError
 from .hooks import default_hooks
 from .status_codes import codes
 from .structures import CaseInsensitiveDict
@@ -398,7 +400,7 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
 
     @staticmethod
     def _get_idna_encoded_host(host):
-        import idna
+        from pip._vendor import idna
 
         try:
             host = idna.encode(host, uts46=True).decode("utf-8")
@@ -945,7 +947,9 @@ class Response:
         return content
 
     def json(self, **kwargs):
-        r"""Returns the json-encoded content of a response, if any.
+        r"""Decodes the JSON response body (if any) as a Python object.
+
+        This may return a dictionary, list, etc. depending on what is in the response.
 
         :param \*\*kwargs: Optional arguments that ``json.loads`` takes.
         :raises requests.exceptions.JSONDecodeError: If the response body does not

@@ -1,78 +1,42 @@
-"""The `version` module holds the version information for Pydantic."""
+# Copyright (C) Dnspython Contributors, see LICENSE for text of ISC license
 
-from __future__ import annotations as _annotations
+# Copyright (C) 2003-2017 Nominum, Inc.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose with or without fee is hereby granted,
+# provided that the above copyright notice and this permission notice
+# appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND NOMINUM DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL NOMINUM BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-__all__ = 'VERSION', 'version_info'
+"""dnspython release version information."""
 
-VERSION = '2.9.2'
-"""The version of Pydantic."""
+#: MAJOR
+MAJOR = 2
+#: MINOR
+MINOR = 8
+#: MICRO
+MICRO = 0
+#: RELEASELEVEL
+RELEASELEVEL = 0x0F
+#: SERIAL
+SERIAL = 0
 
+if RELEASELEVEL == 0x0F:  # pragma: no cover  lgtm[py/unreachable-statement]
+    #: version
+    version = f"{MAJOR}.{MINOR}.{MICRO}"  # lgtm[py/unreachable-statement]
+elif RELEASELEVEL == 0x00:  # pragma: no cover  lgtm[py/unreachable-statement]
+    version = f"{MAJOR}.{MINOR}.{MICRO}dev{SERIAL}"  # lgtm[py/unreachable-statement]
+elif RELEASELEVEL == 0x0C:  # pragma: no cover  lgtm[py/unreachable-statement]
+    version = f"{MAJOR}.{MINOR}.{MICRO}rc{SERIAL}"  # lgtm[py/unreachable-statement]
+else:  # pragma: no cover  lgtm[py/unreachable-statement]
+    version = f"{MAJOR}.{MINOR}.{MICRO}{RELEASELEVEL:x}{SERIAL}"  # lgtm[py/unreachable-statement]
 
-def version_short() -> str:
-    """Return the `major.minor` part of Pydantic version.
-
-    It returns '2.1' if Pydantic version is '2.1.1'.
-    """
-    return '.'.join(VERSION.split('.')[:2])
-
-
-def version_info() -> str:
-    """Return complete version information for Pydantic and its dependencies."""
-    import importlib.metadata as importlib_metadata
-    import os
-    import platform
-    import sys
-    from pathlib import Path
-
-    import pydantic_core._pydantic_core as pdc
-
-    from ._internal import _git as git
-
-    # get data about packages that are closely related to pydantic, use pydantic or often conflict with pydantic
-    package_names = {
-        'email-validator',
-        'fastapi',
-        'mypy',
-        'pydantic-extra-types',
-        'pydantic-settings',
-        'pyright',
-        'typing_extensions',
-    }
-    related_packages = []
-
-    for dist in importlib_metadata.distributions():
-        name = dist.metadata['Name']
-        if name in package_names:
-            related_packages.append(f'{name}-{dist.version}')
-
-    pydantic_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-    most_recent_commit = (
-        git.git_revision(pydantic_dir) if git.is_git_repo(pydantic_dir) and git.have_git() else 'unknown'
-    )
-
-    info = {
-        'pydantic version': VERSION,
-        'pydantic-core version': pdc.__version__,
-        'pydantic-core build': getattr(pdc, 'build_info', None) or pdc.build_profile,
-        'install path': Path(__file__).resolve().parent,
-        'python version': sys.version,
-        'platform': platform.platform(),
-        'related packages': ' '.join(related_packages),
-        'commit': most_recent_commit,
-    }
-    return '\n'.join('{:>30} {}'.format(k + ':', str(v).replace('\n', ' ')) for k, v in info.items())
-
-
-def parse_mypy_version(version: str) -> tuple[int, ...]:
-    """Parse mypy string version to tuple of ints.
-
-    It parses normal version like `0.930` and extra info followed by a `+` sign
-    like `0.940+dev.04cac4b5d911c4f9529e6ce86a27b44f28846f5d.dirty`.
-
-    Args:
-        version: The mypy version string.
-
-    Returns:
-        A tuple of ints. e.g. (0, 930).
-    """
-    return tuple(map(int, version.partition('+')[0].split('.')))
+#: hexversion
+hexversion = MAJOR << 24 | MINOR << 16 | MICRO << 8 | RELEASELEVEL << 4 | SERIAL
